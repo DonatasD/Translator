@@ -1,7 +1,8 @@
 package com.donatasd.translator.common.entity;
 
 import com.donatasd.translator.api.user.entity.User;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import lombok.Data;
@@ -15,9 +16,10 @@ import lombok.EqualsAndHashCode;
 @MappedSuperclass
 public class SoftDeletableEntity extends Audible {
 
-  public Boolean deleted = false;
+  @Column(nullable = false, columnDefinition = "boolean default false")
+  public Boolean deleted = Boolean.FALSE;
 
-  public LocalDate deletedAt;
+  public LocalDateTime deletedAt;
 
   @ManyToOne
   public User deletedBy;

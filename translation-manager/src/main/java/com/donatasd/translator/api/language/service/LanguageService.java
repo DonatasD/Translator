@@ -21,7 +21,7 @@ public class LanguageService {
   }
 
   public void deleteById(String id) {
-    languageRepository.deleteById(id);
+    languageRepository.softDelete(id);
   }
 
   public Language create(Language language) {

@@ -23,7 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 public class Audible extends BaseEntity {
 
-  @Column(nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
   @CreatedDate
   private LocalDateTime createdDate;
 

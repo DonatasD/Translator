@@ -6,12 +6,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.donatasd.translator.api.language.entity.Language;
+import com.donatasd.translator.api.language.dto.LanguageCreateDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
@@ -21,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @SpringBootTest
 @AutoConfigureMockMvc
+@Rollback
 public class LanguageRestControllerTest {
 
   @Autowired
@@ -49,11 +52,11 @@ public class LanguageRestControllerTest {
 
   @Test
   public void create() throws Exception {
-    var language = new Language();
-    language.setCode("en");
+    var createDTO = new LanguageCreateDTO();
+    createDTO.setCode("en");
     ObjectMapper objectMapper = new ObjectMapper();
-    var content = objectMapper.writeValueAsString(language);
-    mockMvc.perform(post("/api/languages").content(content))
+    var content = objectMapper.writeValueAsString(createDTO);
+    mockMvc.perform(post("/api/languages").contentType(MediaType.APPLICATION_JSON).content(content))
         .andDo(print())
         .andExpect(status().isOk());
   }
